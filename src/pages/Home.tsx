@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import PageTransition from "../components/layout/PageTransition";
-import heroVideo from "../assets/hero.mp4";
+import heroVideo from "../assets/Hero.mp4";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
 export default function Home() {
