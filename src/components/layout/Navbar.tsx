@@ -25,7 +25,7 @@ const Navbar: FC = () => {
     <div className="flex items-center gap-10">
       {/* LOGO */}
       <NavLink to="/" className="font-black tracking-[0.2em] text-lg uppercase">
-        BOHEMIO matess
+        BOHEMIO mates
       </NavLink>
 
       {/* DESKTOP NAV */}
