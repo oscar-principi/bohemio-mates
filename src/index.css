@@ -1,0 +1,13 @@
+/* global.css */
+@import "tailwindcss";
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-brand: #0a0a0a;
+  --color-accent: #d4af37;
+}
