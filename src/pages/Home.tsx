@@ -73,7 +73,7 @@ export default function Home() {
              <div className="absolute inset-0 flex items-center justify-center text-white uppercase tracking-widest text-[10px] opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-black/40 backdrop-blur-sm">
                 Explorar Colección Imperial
              </div>
-             <div className="w-full h-full bg-[url('https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80')] bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100" />
+             <div className="w-full h-full bg-[url('https://picsum.photos/id/1060/900/1200')] bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100" />
           </div>
 
           <div className="space-y-10">

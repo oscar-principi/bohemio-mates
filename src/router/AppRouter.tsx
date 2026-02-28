@@ -7,6 +7,7 @@ import Producto2 from "../pages/Categoria2.tsx";
 import Producto3 from "../pages/Categoria3.tsx";
 import Producto4 from "../pages/Categoria4.tsx";
 import Personalizados from "../pages/Personalizados.tsx"; 
+import Cart from "../pages/Cart.tsx";
 
 export default function AppRouter() {
   const location = useLocation();
@@ -21,6 +22,7 @@ export default function AppRouter() {
           <Route path="/categoria-3" element={<Producto3 />} />
           <Route path="/categoria-4" element={<Producto4 />} />
           <Route path="/personalizados" element={<Personalizados />} />
+          <Route path="/carrito" element={<Cart />} />
         </Route>
       </Routes>
     </AnimatePresence>

@@ -1,105 +1,89 @@
-import { useState } from "react";
-import type { Product } from "../../data/products";
-import { ShoppingBag } from "lucide-react";
+import type { Product } from "../../data/types/products";
+import { ShoppingBag, Plus } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
+import { useCart } from "../../context/CartContext";
+import { useSnackbar } from "../../context/SnackbarContext";
 
 interface Props {
   product: Product;
 }
 
 export default function ProductCard({ product }: Props) {
-  const [quantity, setQuantity] = useState(1);
   const { darkMode } = useTheme();
+  const { addToCart, cart } = useCart();
+  const { showSnackbar } = useSnackbar();
 
-  // Cálculo del precio total dinámico
-  const totalPrice = product.price * quantity;
+  // Obtenemos la cantidad actual en el carrito
+  const cartItem = cart.find((item) => item.id === product.id);
+  const quantityInCart = cartItem ? cartItem.quantity : 0;
 
-  const phoneNumber = "5491122334455"; 
-
-  const handleSend = () => {
-    const message = `
-Hola, quiero consultar por el siguiente producto:
-
-*Producto:* ${product.name}
-*Precio unitario:* $${product.price}
-*Cantidad:* ${quantity}
-*Total:* $${totalPrice}
-
-_Descripción:_ ${product.description}
-`;
-    const encoded = encodeURIComponent(message);
-    const url = `https://wa.me/${phoneNumber}?text=${encoded}`;
-    window.open(url, "_blank");
+  const handleAddToCart = () => {
+    addToCart(product, 1); // Siempre agregamos de a 1
+    showSnackbar(`${product.name} agregado`);
   };
 
   return (
     <div
       className={`
-        border-[1px] p-6 flex flex-col gap-4 transition duration-300 rounded
-        ${darkMode
-          ? "bg-black border-white text-white hover:shadow-xl"
-          : "bg-white border-black text-black hover:shadow-xl"}
+        relative p-5 flex flex-col gap-4 transition-all duration-300 rounded-sm border
+        ${
+          darkMode
+            ? "bg-black border-neutral-800 text-white hover:border-white"
+            : "bg-white border-neutral-200 text-black hover:border-black"
+        }
       `}
     >
-      {/* Imagen (Placeholder mejorado) */}
-      <div
+      {/* Imagen con Badge de cantidad */}
+      <div className={`aspect-square flex items-center justify-center overflow-hidden relative ${darkMode ? "bg-neutral-900" : "bg-neutral-50"}`}>
+        
+        {/* Indicador de cantidad (Se ve donde se selecciona) */}
+        {quantityInCart > 0 && (
+          <div className="absolute top-0 right-0 bg-black dark:bg-white text-white dark:text-black w-8 h-8 flex items-center justify-center text-xs font-black z-10 shadow-lg">
+            {quantityInCart}
+          </div>
+        )}
+
+        <img 
+          src={product.image} 
+          alt={product.name} 
+          className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" 
+        />
+      </div>
+
+      {/* Info básica */}
+      <div className="flex flex-col gap-1">
+        <h3 className="text-sm font-bold uppercase tracking-wider truncate">
+          {product.name}
+        </h3>
+        <p className="text-lg font-black">
+          ${product.price.toLocaleString()}
+        </p>
+      </div>
+
+      {/* Botón de Acción Única */}
+      <button
+        onClick={handleAddToCart}
         className={`
-          h-48 flex items-center justify-center rounded overflow-hidden
-          ${darkMode ? "bg-neutral-900 border border-neutral-800" : "bg-neutral-100"}
+          w-full flex items-center justify-center gap-2 py-4 rounded-none
+          font-black uppercase text-[10px] tracking-[0.2em]
+          transition-all active:scale-95
+          ${
+            darkMode
+              ? "bg-white text-black hover:bg-neutral-200"
+              : "bg-black text-white hover:opacity-90"
+          }
         `}
       >
-        <span className="text-xs uppercase tracking-widest opacity-50 font-bold">
-            {product.name}
-        </span>
-      </div>
+        {quantityInCart > 0 ? <Plus size={14} /> : <ShoppingBag size={14} />}
+        {quantityInCart > 0 ? "Añadir otro" : "Agregar al carrito"}
+      </button>
 
-      {/* Información */}
-      <div className="flex flex-col gap-2">
-        <h3 className="text-xl font-black uppercase tracking-tighter">{product.name}</h3>
-        <p className="text-sm opacity-70 line-clamp-2">{product.description}</p>
-        
-        {/* Precio dinámico con animación simple */}
-        <div className="flex flex-col mt-2">
-            <span className="text-[10px] uppercase tracking-widest opacity-50">Precio Total</span>
-            <span className="text-2xl font-black tracking-tight">
-                ${totalPrice.toLocaleString()}
-            </span>
-        </div>
-      </div>
-
-      {/* Acciones */}
-      <div className="flex items-center justify-between mt-4 gap-4">
-        {/* Input de Cantidad */}
-        <div className="flex flex-col gap-1">
-            <label className="text-[10px] uppercase font-bold opacity-50">Cant.</label>
-            <input
-              type="number"
-              min={1}
-              value={quantity}
-              onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-              className={`
-                w-16 px-2 py-2 border-[1px] rounded font-bold text-center
-                ${darkMode
-                  ? "border-white bg-black text-white focus:ring-1 focus:ring-white outline-none"
-                  : "border-black bg-white text-black focus:ring-1 focus:ring-black outline-none"}
-              `}
-            />
-        </div>
-
-        {/* Botón */}
-        <button
-          onClick={handleSend}
-          className={`
-            flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded font-black uppercase text-[11px] tracking-widest transition-all
-            ${darkMode
-              ? "bg-white text-black hover:bg-neutral-200"
-              : "bg-black text-white hover:opacity-80"}
-          `}
-        >
-          <ShoppingBag size={16} />
-          Consultar
-        </button>
-      </div>
+      {/* Subtotal discreto si hay más de 1 */}
+      {quantityInCart > 1 && (
+        <p className="text-[9px] uppercase text-center opacity-40 font-bold tracking-widest">
+          Subtotal: ${(product.price * quantityInCart).toLocaleString()}
+        </p>
+      )}
     </div>
   );
 }

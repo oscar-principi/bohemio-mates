@@ -22,7 +22,8 @@ export default function Footer() {
           >
             <div className="text-3xl md:text-2xl font-black tracking-tighter">
               <span className="text-red-600">Rock</span>
-              {/* Lab reacciona al modo claro (negro) y oscuro (blanco/zinc-100) */}
+              
+              {/* ✅ Forzamos text-black para el modo claro y dark:text-zinc-100 para el oscuro */}
               <span className="text-black dark:text-zinc-100 transition-colors duration-300">
                 Lab
               </span>

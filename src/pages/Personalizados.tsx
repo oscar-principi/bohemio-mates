@@ -1,6 +1,6 @@
 import { useTheme } from "../context/ThemeContext";
 import ProductCard from "../components/ui/ProductCard";
-import { personalizados } from "../data/products.ts";
+import { personalizados } from "../data/types/products.ts";
 import PageTransition from "../components/layout/PageTransition";
 import { Paintbrush } from "lucide-react";
 

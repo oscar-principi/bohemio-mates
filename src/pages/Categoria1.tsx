@@ -1,6 +1,6 @@
 import { useTheme } from "../context/ThemeContext";
 import ProductCard from "../components/ui/ProductCard";
-import { categoria1 } from "../data/products";
+import { categoria1 } from "../data/types/products";
 import PageTransition from "../components/layout/PageTransition";
 
 export default function Producto1() {
