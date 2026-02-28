@@ -1,6 +1,7 @@
 import { useCart } from "../context/CartContext";
-import { Trash, Plus, Minus } from "lucide-react"; // Importamos los iconos
+import { Trash, Plus, Minus } from "lucide-react"; 
 import { useTheme } from "../context/ThemeContext";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
   const {
@@ -44,14 +45,23 @@ Gracias!
     window.open(url, "_blank");
   };
 
-  if (cart.length === 0) {
-    return (
-      <div className="p-20 text-center flex flex-col items-center gap-4">
-        <p className="opacity-50 uppercase tracking-widest text-sm">El carrito está vacío</p>
-        <a href="/" className="underline text-xs uppercase tracking-tighter hover:opacity-50 transition-opacity">Volver a la tienda</a>
-      </div>
-    );
-  }
+if (cart.length === 0) {
+  return (
+    <div className="p-20 text-center flex flex-col items-center gap-4">
+      <p className="opacity-50 uppercase tracking-widest text-sm">
+        El carrito está vacío
+      </p>
+
+      <Link
+        to="/"
+        replace
+        className="underline text-xs uppercase tracking-tighter hover:opacity-50 transition-opacity"
+      >
+        Volver a la tienda
+      </Link>
+    </div>
+  );
+}
 
   return (
     <div className="max-w-5xl mx-auto p-6 md:p-10 flex flex-col gap-8 mt-20">

@@ -13,7 +13,7 @@ export default function Layout() {
     }`}>
       <Header />
       
-      <main className="pt-16 flex-grow">
+      <main className="pt-16 grow">
         <Outlet />
       </main>
 

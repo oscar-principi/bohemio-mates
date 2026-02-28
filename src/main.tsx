@@ -11,7 +11,7 @@ import { SnackbarProvider } from "./context/SnackbarContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <HashRouter>
+    <HashRouter >
       <ThemeProvider>
         <SnackbarProvider>
          <CartProvider>
